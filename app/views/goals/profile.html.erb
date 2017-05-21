@@ -1,0 +1,28 @@
+<h3 id="prof_header"><%= @user.f_name %> <%= @user.l_name %></h3>
+
+<br>
+
+<div class="user_goals">
+  <h4>Goals:</h4>
+  <% @goals.each do |g| %>
+    <p><%= g.content %></p>
+  <% end %>
+</div>
+
+<div class="messages">
+  <h4>Messages:</h4>
+  <% @messages.each do |m| %>
+    <p><strong><%= m.sender.f_name %> <%= m.sender.l_name %>:</strong> <%= m.content %></p>
+  <% end %>
+</div>
+
+<div class="post">
+  <h5>Post Message:</h5>
+  <p><form class="" action="/post_message/<%=@user.id%>" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <textarea name="content" rows="4" cols="40"></textarea>
+    <p><button type="submit" class="btn btn-primary">Post</button></p>
+  </form></p>
+</div>
+
+<a href="/show">Home</a>
