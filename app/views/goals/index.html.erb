@@ -25,46 +25,49 @@
 </div>
 <%end%>
 
-<div class="register">
-  <form action="/create" method="post">
-    <div class="form-group">
-      <h1>Register</h1>
-      <div class="col-md-4">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <label for="f_name">First Name</label>
-        <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First Name" required>
-        <br>
-        <label for="l_name">Last Name</label>
-        <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last Name" required>
-        <br>
-        <label for="">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        <br>
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-        <br>
-        <label for="password_confirmation">Password Conformation</label>
-        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation" required>
-        <br>
-        <button type="submit" class="btn btn-primary">Register</button>
+<div class="wrapper">
+  <div class="login">
+    <form  action="/log_user" method="post">
+      <div class="form-group">
+        <div class="col-md-4">
+          <h1>Login</h1>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <label for="">Email address</label>
+          <input class="form-control" type="text" name='email' placeholder="Enter email" required> <br>
+          <label for="password">Password</label>
+          <input class="form-control" type="password" name="password" placeholder="Password" required> <br>
+          <input class="btn btn-primary" type="submit" value="Login" class="input-submit"> <br>
+        </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
 
-<div class="login">
-  <form  action="/log_user" method="post">
-    <div class="form-group">
-      <div class="col-md-4">
-        <h1>Login</h1>
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <label for="">Email address</label>
-        <input class="form-control" type="text" name='email' placeholder="Enter email" required> <br>
-        <label for="password">Password</label>
-        <input class="form-control" type="password" name="password" placeholder="Password" required> <br>
-        <input class="btn btn-primary" type="submit" value="Login" class="input-submit"> <br>
+  <div class="register">
+    <form action="/create" method="post">
+      <div class="form-group">
+        <h1>Register</h1>
+        <br>
+        <div class="col-md-4">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <label for="f_name">First Name</label>
+          <input type="text" class="form-control" id="f_name" name="f_name" placeholder="First Name" required>
+          <br>
+          <label for="l_name">Last Name</label>
+          <input type="text" class="form-control" id="l_name" name="l_name" placeholder="Last Name" required>
+          <br>
+          <label for="">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <br>
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          <br>
+          <label for="password_confirmation">Password Conformation</label>
+          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation" required>
+          <br>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

@@ -1,144 +1,127 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+</head>
+
 <script type="text/javascript">
 $(document).ready(function(){
     $(".add_form").hide();
     $('#add_goal').click(function(event){event.preventDefault();$('.add_form').show();});
     $('#close').click(function(event){event.preventDefault();$('.add_form').hide();});
-    // var next = 1;
-    // $(".add-more").click(function(e){
-    //     e.preventDefault();
-    //     var addto = "#field" + next;
-    //     var addRemove = "#field" + (next);
-    //     next = next + 1;
-    //     var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
-    //     var newInput = $(newIn);
-    //     // var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-    //     // var removeButton = $(removeBtn);
-    //     $(addto).after(newInput);
-    //     // $(addRemove).after(removeButton);
-    //     $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-    //     $("#count").val(next);
-
-            // $('.remove-me').click(function(e){
-            //     e.preventDefault();
-            //     var fieldNum = this.id.charAt(this.id.length-1);
-            //     var fieldID = "#field" + fieldNum;
-            //     $(this).remove();
-            //     $(fieldID).remove();
-            // });
-    // });
   });
 </script>
 
-<div class="top">
-  <%= image_tag("rtj-hand.png", :class => "hand", :alt => "rss feed") %>
-  <%= image_tag("golden-right.png", :class => "fist", :alt => "rss feed") %>
-</div>
-<div class="headers">
-  <h3>Hello, <%=@user.f_name%></h3>
-  <h3>It's MayDay, bitch!</h3>
-  <a href="/view_profile/<%=@user.id%>">Your Profile</a> | <a href="/logout">Logout</a>
-</div>
-
-<br>
-
-<br>
-
-<br>
-
-<% if @goals %>
-  <div class="goals">
-    <h3>Goals:</h3>
-    <hr>
-    <% @goals.sort_by(&:content).each do |g| %>
-      <% if g.completed %>
-        <form action="/incomplete_goal/<%=g.id%>" method="post">
+<div class="body">
+  <div class="top">
+    <%= image_tag("rtj-hand.png", :class => "hand", :alt => "rss feed") %>
+    <%= image_tag("golden-right.png", :class => "fist", :alt => "rss feed") %>
+  </div>
+  <div class="headers">
+    <h3>Hello, <%=@user.f_name%></h3>
+    <h3>It's MayDay, bitch!</h3>
+    <a id="profile_link" href="/view_profile/<%=@user.id%>">Your Profile</a> | <a href="/logout">Logout</a>
+    <br>
+    <br>
+    <button id="add_goal" type="submit" class="btn btn-primary">Add Goal</button>
+    <br>
+    <br>
+    <div class="add_form">
+      <div class="row">
+        <form action="/add_goal" class="input-append" method="post">
           <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <button type="submit" class="btn btn-success">I'm a liar</button>
-          <%= g.content %>
-          <hr>
+          <input autocomplete="off" required="true" class="input" id="field1" name="content" type="text" placeholder=" Type goal..." data-items="8"/>
+          <br>
+          <br>
+          <button class="btn btn-primary btn-sm" type="submit" name="button">Add</button>
+          <button class="btn btn-primary btn-sm" id="close" type="button" name="button">Cancel</button>
         </form>
-       <% else %>
-        <form class="" action="/complete_goal/<%=g.id%>" method="post">
-          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-          <input type="checkbox" onClick="submit();" name="" value="">
-          <%= g.content %>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="mid">
+      <div class="goals">
+        <% if ! @goals %>
+          <h4>Set</h4>
+          <h4>Some</h4>
+          <h4>Goals</h4>
+          <h4>You</h4>
+          <h4>Lazy</h4>
+          <h4>Bitch</h4>
+        <% end %>
+        <% if @goals %>
+          <h3>Goals:</h3>
           <hr>
-        </form>
+          <% @goals.sort_by(&:content).each do |g| %>
+            <% if g.completed %>
+              <form action="/incomplete_goal/<%=g.id%>" method="post">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <button type="submit" class="btn btn-success">I'm a liar</button>
+                <%= g.content %>
+                <hr>
+              </form>
+             <% else %>
+              <form class="" action="/complete_goal/<%=g.id%>" method="post">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="checkbox" onClick="submit();" name="" value="">
+                <%= g.content %>
+                <hr>
+              </form>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+    <div class="middle">
+
+    </div>
+
+    <div class="others">
+      <% if @users.size > 1 %>
+        <h3>Other fuck boi participants:</h3>
+        <hr>
+        <% @users.each do |u| %>
+        <% if u != @user %>
+        <p><%= u.f_name %> <%= u.l_name %> | <a href="/view_profile/<%=u.id%>">View Profile</a></p>
+        <hr>
+        <% end %>
+        <% end %>
       <% end %>
+    </div>
+  </div>
+
+  <div class="failed">
+    <% if @goals %>
+      <form class="failed_form" action="/failed/<%=@user.id%>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <button id="failed_btn" type="submit" class="btn btn-danger">I FAILED THE DAY</button></form>
+    <% end %>
+    <% if @count %>
+      <h4 id="countdown">Grounded from alcohol for <strong><%= @count.count %></strong> days, idiot!</h4>
     <% end %>
   </div>
-<% end %>
+  <!-- <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
 
-<div class="middle">
-  <div class="add_btn">
-    <button id="add_goal" type="submit" class="btn btn-primary">Add Goal</button>
-  </div>
-  <div class="add_form">
-    <div class="row">
-      <input type="hidden" name="count" value="1" />
-      <div class="control-group" id="fields">
-        <div class="controls" id="profs">
-          <form action="/add_goal" class="input-append" method="post">
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <div id="field"><input autocomplete="off" required="true" class="input" id="field1" name="content" type="text" placeholder="Type something" data-items="8"/>
-              <!-- <button id="b1" class="btn add-more" type="button">+</button> -->
-            </div>
-            <br>
-            <input type="submit" name="" value="Add">
-            <button id="close" type="button" name="button">Close</button>
-          </form>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+        </div>
+        <div class="item">
+
         </div>
       </div>
-    </div>
-    <br>
-    <br>
-  </div>
+
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div> -->
 </div>
-
-<div class="others">
-  <% if @users.size > 1 %>
-    <h3>Other fuck boi participants:</h3>
-    <hr>
-    <% @users.each do |u| %>
-    <% if u != @user %>
-    <p><%= u.f_name %> <%= u.l_name %> | <a href="/view_profile/<%=u.id%>">View Profile</a></p>
-    <hr>
-    <% end %>
-    <% end %>
-  <% end %>
-</div>
-
-<div class="failed">
-  <% if @goals %>
-    <form class="failed_form" action="/failed/<%=@user.id%>" method="post">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <button id="failed_btn" type="submit" class="btn btn-danger">I FAILED THE DAY</button></form>
-  <% end %>
-  <% if @count %>
-    <h4 id="countdown">Grounded from alcohol for <strong><%= @count.count %></strong> days, idiot!</h4>
-  <% end %>
-</div>
-<!-- <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <div class="carousel-inner" role="listbox">
-      <div class="item active">
-      </div>
-      <div class="item">
-
-      </div>
-    </div>
-
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div> -->
