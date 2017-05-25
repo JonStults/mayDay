@@ -19,8 +19,8 @@
 <%end%>
 <% if flash[:errors] %>
 <div class="alert alert-danger">
-    <% flash[:errors].each do |error| %> <br>
-    <strong><%= error%></strong>
+    <% flash[:errors].each do |error, value| %> <br>
+    <strong><%= error %> <%= value[0] %></strong>
     <%end%>
 </div>
 <%end%>

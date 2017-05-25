@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post '/complete_goal/:goal_id' => 'goals#complete_goal'
   post '/incomplete_goal/:goal_id' => 'goals#incomplete_goal'
   post '/failed/:user_id' => 'goals#failed'
+  post '/avatar' => 'goals#avatar'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

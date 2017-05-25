@@ -1,29 +1,29 @@
-<h3 id="prof_header"><%= @user.f_name %> <%= @user.l_name %></h3>
-<div class="prof_link">
-  <a href="/show">Dashboard</a> | <a href="/logout">Logout</a>
-</div>
+<div class="body">
+  <h3 id="prof_header"><%= @user.f_name %> <%= @user.l_name %></h3>
 
-<br>
+  <div class="prof_link">
+    <a href="/show">Dashboard</a> | <a href="/logout">Logout</a>
+  </div>
 
-<div class="user_goals">
-  <h4>Goals:</h4>
-  <% @goals.each do |g| %>
-    <p><%= g.content %></p>
-  <% end %>
-</div>
+  <br>
 
-<div class="messages">
-  <h4>Messages:</h4>
-  <% @messages.each do |m| %>
-    <p><strong><%= m.sender.f_name %> <%= m.sender.l_name %>:</strong> <%= m.content %></p>
-  <% end %>
-</div>
+  <div class="user_goals">
+    <h4>Goals:</h4>
+    <% @goals.each do |g| %>
+      <p><%= g.content %></p>
+    <% end %>
+  </div>
 
-<div class="post">
-  <h5>Post Message:</h5>
-  <p><form class="" action="/post_message/<%=@user.id%>" method="post">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <textarea id="text_area" name="content" rows="4" cols="40"></textarea>
-    <p><button type="submit" class="btn btn-primary">Post</button></p>
-  </form></p>
+  <div class="messages">
+    <h4>Messages:</h4>
+    <% @messages.each do |m| %>
+      <p><strong><%= m.sender.f_name %> <%= m.sender.l_name %>:</strong> <%= m.content %></p>
+    <% end %>
+    <h5>Post Message:</h5>
+    <p><form class="" action="/post_message/<%=@user.id%>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <textarea id="text_area" name="content" rows="4" cols="40"></textarea>
+      <p><button type="submit" class="btn btn-primary">Post</button></p>
+    </form></p>
+  </div>
 </div>

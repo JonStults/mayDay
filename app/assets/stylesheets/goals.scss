@@ -18,7 +18,12 @@
   display: block;
   margin: 0 auto;
   text-align: center;
+  // background-color: #F16059;
   background-image: url("balloons.jpg");
+}
+
+.top {
+  // background-color: #F16059;
 }
 
 .register h1 {
@@ -75,24 +80,36 @@
   overflow: scroll;
   background: rgb(255, 255, 255) transparent;
   background: rgba(255, 255, 255, 0.8);
-  // background-color: lightgreen;
+  position: relative;
+  background-color: lightgreen;
 }
 
 .middle {
-  background-image: url("goals.jpg");
   display: inline-block;
   height: 450px;
   width: 40%;
+  margin-top: 0px!important;
+  position: relative;
+}
+
+#myCarousel {
+  margin-top: 0px!important;
+  position: absolute;
+}
+
+.mid {
+  background-color: lightgreen;
 }
 
 .others {
   display: inline-block;
-  // float: right;
+  position: absolute;
   padding-right: 10px;
   width: 29.7%;
   padding-left: 10px;
   height: 450px;
   overflow: scroll;
+  // background-color: lightgreen;
 }
 
 #add_goal {
@@ -102,6 +119,10 @@
 
 .failed_form {
   display: inline-block;
+}
+
+.failed {
+  background-color: lightgreen;
 }
 
 .fist {
