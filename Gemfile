@@ -25,6 +25,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem "paperclip", "~> 5.0.0"
 
+gem 'rails_12factor', group: :production
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

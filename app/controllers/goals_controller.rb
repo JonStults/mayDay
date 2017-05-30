@@ -9,7 +9,7 @@ class GoalsController < ApplicationController
 
   def view_profile
     if ! session[:user_id]
-      redirect_to "/"
+      redirect_to "/index"
       return
     end
     @user = User.find_by_id(params[:id])
@@ -24,16 +24,16 @@ class GoalsController < ApplicationController
     user = User.create(f_name:params[:f_name],l_name:params[:l_name],email:params[:email],password:params[:password],password_confirmation:params[:password_confirmation], avatar: params[:avatar])
     if !user.errors.blank?
       flash[:errors] = user.errors.messages
-      return redirect_to '/'
+      return redirect_to '/index'
     end
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      return redirect_to '/show'
+      return redirect_to '/'
     else
       flash.now[:errors] = 'Invalid email/password combination'
-      return redirect_to '/'
+      return redirect_to '/index'
     end
-    return redirect_to '/show'
+    return redirect_to '/'
   end
 
   def avatar
@@ -64,23 +64,23 @@ class GoalsController < ApplicationController
   def add_goal
     user = User.find_by_id(session[:user_id])
     Goal.create(content: params[:content], user: user)
-    redirect_to '/show'
+    redirect_to '/'
   end
 
   def log_user
     @user = User.find_by_email(params[:email])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect_to "/show"
+      redirect_to "/"
     else
       flash[:log_error] = 'Invalid email/password combination'
-    return redirect_to '/'
+    return redirect_to '/index'
     end
   end
 
   def logout
     reset_session
-    redirect_to '/'
+    redirect_to '/index'
   end
 
   def post_message
@@ -94,14 +94,14 @@ class GoalsController < ApplicationController
     goal = Goal.find_by_id(params[:goal_id])
     goal.completed = true
     goal.save
-    redirect_to "/show"
+    redirect_to "/"
   end
 
   def incomplete_goal
     goal = Goal.find_by_id(params[:goal_id])
     goal.completed = false
     goal.save
-    redirect_to "/show"
+    redirect_to "/"
   end
 
   def failed
@@ -120,13 +120,13 @@ class GoalsController < ApplicationController
       success.save
     end
     flash[:alert] = "Everyone expected your dumbass to fail!"
-    redirect_to "/show"
+    redirect_to "/"
   end
 
   def show
     count = 0
     if ! session[:user_id]
-      redirect_to "/"
+      redirect_to "/index"
       return
     end
     @user = User.find_by_id(session[:user_id])
@@ -142,7 +142,6 @@ class GoalsController < ApplicationController
         @count = alcohol
       end
     end
-    Alcohol.count_down
     Goal.count
 
     goals.each do |g|

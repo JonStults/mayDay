@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root 'goals#index'
+  get  '/index' => 'goals#index'
   post '/create' => 'goals#create'
-  get '/show' => 'goals#show'
+  root 'goals#show'
   post '/log_user' => 'goals#log_user'
   get '/logout' => 'goals#logout'
   post '/add_goal' => 'goals#add_goal'
