@@ -29,6 +29,7 @@ gem 'rails_12factor', group: :production
 
 gem 'heroku'
 
+'ruby 2.2.1'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
