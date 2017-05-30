@@ -37,27 +37,14 @@ class GoalsController < ApplicationController
   end
 
   def avatar
-    puts 'this is avatar', params[:user][:avatar]
-    puts '********'
-    puts 'reached avatar'
-    puts '********'
     user = User.find_by_id(params[:id])
-    puts 'this is the user', user.id
     user.avatar = params[:user][:avatar]
-    puts 'this is the user avatar', user.avatar
     user.save
     if user.save
-      puts '******'
       puts 'user was saved!'
     else
-      puts '%%%%%%%%'
       raise user.errors.to_yaml
-      puts 'user was not saved!'
     end
-    puts '********'
-    puts params[:user][:avatar]
-    puts 'saved avatar'
-    puts '********'
     redirect_to "/view_profile/#{user.id}"
   end
 

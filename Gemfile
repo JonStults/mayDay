@@ -27,6 +27,8 @@ gem "paperclip", "~> 5.0.0"
 
 gem 'rails_12factor', group: :production
 
+gem 'heroku'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
