@@ -3,19 +3,25 @@ class GoalsController < ApplicationController
     render 'index'
   end
 
+  def edit
+    @user = User.find_by_id(session[:user_id])
+  end
+
   def view_profile
     if ! session[:user_id]
       redirect_to "/"
       return
     end
     @user = User.find_by_id(params[:id])
+    @current_user = User.find_by_id(session[:user_id])
     @goals = Goal.where(user: @user)
     @messages = Message.where(recipient: @user)
+    @success = Success.where(user: @user).first
     render 'profile'
   end
 
   def create
-    user = User.create(f_name:params[:f_name],l_name:params[:l_name],email:params[:email],password:params[:password],password_confirmation:params[:password_confirmation])
+    user = User.create(f_name:params[:f_name],l_name:params[:l_name],email:params[:email],password:params[:password],password_confirmation:params[:password_confirmation], avatar: params[:avatar])
     if !user.errors.blank?
       flash[:errors] = user.errors.messages
       return redirect_to '/'
@@ -28,6 +34,31 @@ class GoalsController < ApplicationController
       return redirect_to '/'
     end
     return redirect_to '/show'
+  end
+
+  def avatar
+    puts 'this is avatar', params[:user][:avatar]
+    puts '********'
+    puts 'reached avatar'
+    puts '********'
+    user = User.find_by_id(params[:id])
+    puts 'this is the user', user.id
+    user.avatar = params[:user][:avatar]
+    puts 'this is the user avatar', user.avatar
+    user.save
+    if user.save
+      puts '******'
+      puts 'user was saved!'
+    else
+      puts '%%%%%%%%'
+      raise user.errors.to_yaml
+      puts 'user was not saved!'
+    end
+    puts '********'
+    puts params[:user][:avatar]
+    puts 'saved avatar'
+    puts '********'
+    redirect_to "/view_profile/#{user.id}"
   end
 
   def add_goal
@@ -75,13 +106,20 @@ class GoalsController < ApplicationController
 
   def failed
     user = User.find_by_id(session[:user_id])
-    if Alcohol.exists?(user: user)
+    if ! Alcohol.exists?(user: user)
+      Alcohol.create(count: 7, user: user)
+    end
+    if ! Alcohol.today.exists?(user: user)
       alcohol = Alcohol.where(user: user).first
       alcohol.count += 7;
       alcohol.save
-    else
-    Alcohol.create(count: 7, user: user)
     end
+    success = Success.where(user: user).first
+    if success
+      success.days = 0
+      success.save
+    end
+    flash[:alert] = "Everyone expected your dumbass to fail!"
     redirect_to "/show"
   end
 
@@ -114,8 +152,29 @@ class GoalsController < ApplicationController
       end
       if count == @goals.length
         flash[:success] = "Congratulations on completing today's goals, no one thought you could do it!"
+        if ! Success.exists?(user: @user)
+          Success.create(days: 1, user: @user)
+        end
+        if ! Success.today.exists?(user: @user)
+          success = Success.where(user: @user).first
+          success.days += 1;
+          success.save
+        end
       end
     end
     render 'goals'
   end
+
+  def destroy
+    user = User.find_by_id(session[:user_id])
+    goal = Goal.find_by_id(params[:goal_id])
+    goal.destroy
+    redirect_to "/view_profile/#{user.id}"
+  end
+
+  # private
+  #
+  # def user_params
+  #   params.require(:user).permit(:id, :f_name, :l_name, :email, :password, :password_confirmation, :avatar)
+  # end
 end

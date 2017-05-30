@@ -4,11 +4,24 @@
 
 .user_goals {
   display: inline-block;
-  padding-left: 10px;
+  float: right;
+  padding-right: 10px;
+  width: 33%;
 }
 
 .messages {
   display: inline-block;
-  float: right;
-  padding-right: 10px;
+  padding-left: 10px;
+  width: 33%;
+}
+
+.success {
+  text-align: center;
+}
+
+.prof_pic {
+  height: 250px;
+  width: 200px;
+  display: block;
+  margin: 0 auto;
 }

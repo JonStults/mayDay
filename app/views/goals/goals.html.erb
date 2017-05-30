@@ -12,10 +12,10 @@ $(document).ready(function(){
 
 <div class="body">
   <% if flash[:success] %>
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %><button type="button" class="close" data-dismiss="alert" name="button">&times;</button></div>
-    <% end %>
-  <% end %> 
+    <div class="alert alert-success"><%= flash[:success] %><button type="button" class="close" data-dismiss="alert" name="button">&times;</button></div>
+  <% elsif flash[:alert] %>
+    <div class="alert alert-danger"><%= flash[:alert] %><button type="button" class="close" data-dismiss="alert" name="button">&times;</button></div>
+  <% end %>
   <div class="top">
     <%= image_tag("rtj-hand.png", :class => "hand", :alt => "rss feed") %>
     <%= image_tag("golden-right.png", :class => "fist", :alt => "rss feed") %>

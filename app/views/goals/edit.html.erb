@@ -1,0 +1,16 @@
+<h3>Edit Account:</h3>
+
+<br>
+
+<%= form_for @user, :html => { :multipart => true } do |f| %>
+  <%= f.hidden_field :id %>
+  <div class="form-group">
+    <p><%= f.label :picture %></p>
+    <p><%= f.file_field :avatar %></p>
+  </div>
+  <div class="actions">
+    <p><%= f.submit class: "btn btn-primary"%></p>
+  </div>
+<% end %>
+
+<p><a href="/view_profile/<%=@user.id%>">Go Back</a></p>
