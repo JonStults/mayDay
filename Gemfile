@@ -9,6 +9,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rails', '4.2.6'
 gem 'countdown'
 
+gem 'puma'
+
 gem 'carrierwave', '~> 1.0'
 
 # Use postgresql as the database for Active Record
